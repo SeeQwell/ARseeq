@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Video</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</script>
+<script>
+
+    AFRAME.registerComponent('hide-in-ar-mode', {
+      
+        init: function () {
+            this.el.sceneEl.addEventListener('enter-vr', (ev) => {
+                this.wasVisible = this.el.getAttribute('visible');
+                if (this.el.sceneEl.is('ar-mode')) {
+                    this.el.setAttribute('visible', false);
+                }
+            });
+            this.el.sceneEl.addEventListener('exit-vr', (ev) => {
+                if (this.wasVisible) this.el.setAttribute('visible', true);
+            });
+        }
+    });
+
+</script>
+</head>
+<body>
+    <a-scene>
+        <a-assets>
+            <video id="assets" autoplay loop="true" src="assets/assets.mp4"></video>
+        </a-assets>
+    
+        <a-video src="#assets" 
+        width="6" 
+        height="9" 
+        position="0 0 -10" 
+        webkit-playsinline
+        playsinline>
+        </a-video>
+    
+        
+    
+    </a-scene>
+
+
+
+</body>
+</html>
